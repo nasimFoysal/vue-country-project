@@ -23,27 +23,27 @@ const saveCountryIdsToLocalStorage = (type, countryId) =>{
 // ---------------
 const saveCommentsToLocalStorage = (obj) => {
     const allStoredComments = getStoredData("allComments");
-    console.log(allStoredComments);
+    // console.log(allStoredComments);
+
     if (allStoredComments.length>0) {
-        console.log('inside');
-        const hasCommentedBefore = allStoredComments.findIndex(
+        // console.log('inside');
+        const hasCommentedBefore = allStoredComments.find(
             (storedComment) => storedComment.countryCode === obj.countryCode
         );
         //     country code ache
-        if (hasCommentedBefore !== -1) {
-            console.log(allStoredComments[hasCommentedBefore].comments);
-            allStoredComments[hasCommentedBefore].comments.push(obj.commentDetails);
-            return;
+        if (hasCommentedBefore) {
+            hasCommentedBefore.comments.push({...obj.commentDetails});
+            const idx = allStoredComments.findIndex(c => c.countryCode ===    obj.countryCode);
+            allStoredComments.splice(idx, 1, hasCommentedBefore);
         } else {
             //     country code nai
             allStoredComments.push({countryCode : obj.countryCode, comments : [{...obj.commentDetails}]});
-            return;
         }
     } else {
         allStoredComments.push({countryCode : obj.countryCode, comments : [{...obj.commentDetails}]});
+
     }
 
     localStorage.setItem("allComments", JSON.stringify(allStoredComments));
-    console.log(allStoredComments);
 };
 export {getStoredData, saveCommentsToLocalStorage, saveCountryIdsToLocalStorage}

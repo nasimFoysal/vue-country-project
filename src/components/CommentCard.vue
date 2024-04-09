@@ -1,7 +1,15 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
-import {saveCommentsToLocalStorage} from "../utilities/localstorage.js";
+import {getStoredData} from "../utilities/localstorage.js";
+import DisplayComments from "./DisplayComments.vue";
+
+const route = useRoute()
+const storedComments = ref([]);
+
+onMounted(()=>{
+  storedComments.value = getStoredData('allComments');
+})
 
 const formData = ref({
   name: '',
@@ -9,29 +17,47 @@ const formData = ref({
   comment: ''
 })
 
-const route = useRoute()
-console.log(route.params.id)
-
-
 const handleCommentFormData = ()=>{
-  const localStorageCommentObj = {
+  const obj = {
     countryCode: route.params.id,
     commentDetails: {
       id: Date.now(),
       name: formData.value.name,
       email: formData.value.email,
       comment: formData.value.comment
-
-
     }
   }
-  saveCommentsToLocalStorage(localStorageCommentObj)
   console.log('formmmm')
+//   -----------------------------------------
+  let allStoredComments = storedComments.value;
+  // console.log(allStoredComments);
+  if (allStoredComments.length>0) {
+    // console.log('inside');
+    const hasCommentedBefore = allStoredComments.find(
+        (storedComment) => storedComment.countryCode === obj.countryCode
+    );
+    //     country code ache
+    if (hasCommentedBefore) {
+      hasCommentedBefore.comments.push({...obj.commentDetails});
+      const idx = allStoredComments.findIndex(c => c.countryCode ===    obj.countryCode);
+      allStoredComments.splice(idx, 1, hasCommentedBefore);
+    } else {
+      //     country code nai
+      allStoredComments.push({countryCode : obj.countryCode, comments : [{...obj.commentDetails}]});
+    }
+  } else {
+    allStoredComments.push({countryCode : obj.countryCode, comments : [{...obj.commentDetails}]});
+
+  }
+  storedComments.value = allStoredComments;
+
+
+//   -----------------------------------------
 }
 
-// console.log(formData.value.name)
-
-
+watch(storedComments, (newValue)=>{
+  localStorage.setItem("allComments", JSON.stringify(newValue))
+}, {deep: true})
 
 </script>
 
@@ -40,7 +66,7 @@ const handleCommentFormData = ()=>{
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
     <div class="col-span-1">
-      <h1>12 Comments</h1>
+      <DisplayComments :storedComments="storedComments" :id="route.params.id"></DisplayComments>
     </div>
 
     <div class="col-span-1 border border-red-600">

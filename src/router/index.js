@@ -5,6 +5,7 @@ import Aboutview from "../views/Aboutview.vue";
 import Contactview from "../views/Contactview.vue";
 import CountryDetails from "../components/CountryDetails.vue";
 import CommentCard from "../components/CommentCard.vue";
+import ListedCountriesview from "../views/ListedCountriesview.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +36,11 @@ const router = createRouter({
                   component: CommentCard
               }
           ]
+      },
+      {
+          path: '/listedCountries',
+          name: 'listedCountries',
+          component: ListedCountriesview,
       }
   ],
 });
