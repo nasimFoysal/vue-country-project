@@ -12,9 +12,11 @@ watch(checkboxValue, ()=>{
 
 <template >
   <div>
-    <input v-model="checkboxValue" type="checkbox" name="" id="" >
-    <label>Independent</label>
-    {{checkboxValue}}
+    <div>
+      <input v-model="checkboxValue" type="checkbox" name="" id="" class="mr-2">
+      <label class="font-semibold">Independent</label>
+    </div>
+<!--    {{checkboxValue}}-->
   </div>
 
 </template>

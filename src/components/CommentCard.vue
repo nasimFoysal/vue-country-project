@@ -53,6 +53,9 @@ const handleCommentFormData = ()=>{
 
 
 //   -----------------------------------------
+  formData.value.name = '';
+  formData.value.email = '';
+  formData.value.comment = '';
 }
 
 watch(storedComments, (newValue)=>{
@@ -63,14 +66,14 @@ watch(storedComments, (newValue)=>{
 
 
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-10   gap-6 mt-16">
 
-    <div class="col-span-1">
+    <div class="col-span-6">
       <DisplayComments :storedComments="storedComments" :id="route.params.id"></DisplayComments>
     </div>
 
-    <div class="col-span-1 border border-red-600">
-      <form  class="space-y-3 w-[80%] flex flex-col items-center justify-center">
+    <div class="col-span-4 flex  items-start justify-end">
+      <form  class="space-y-3 w-[100%] flex flex-col items-center justify-center mt-10">
         <input
             v-model="formData.name"
             type="text"
@@ -86,7 +89,7 @@ watch(storedComments, (newValue)=>{
         />
         <textarea
             v-model="formData.comment"
-            class="textarea textarea-bordered  textarea-lg w-full"
+            class="textarea textarea-bordered  min-h-[200px] w-full"
             placeholder="Your comment">
         </textarea>
         <button type="submit"

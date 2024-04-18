@@ -2,7 +2,7 @@
 
 import {ref, defineEmits, watch} from "vue";
 
-const dropdownValue = ref('');
+const dropdownValue = ref('All');
 const emit = defineEmits(['emitDropdownSelected'])
 
 watch(dropdownValue, ()=>{
@@ -15,11 +15,11 @@ watch(dropdownValue, ()=>{
 </script>
 
 <template>
-  {{dropdownValue}}
+
   <div>
     <select v-model="dropdownValue" class="select w-full max-w-xs">
-      <option disabled selected>Countries By Continent</option>
-      <option value="all">All</option>
+<!--      <option disabled selected>Countries By Continent</option>-->
+      <option value="All">All</option>
       <option value="Oceania">Australia </option>
       <option value="Africa">Africa</option>
       <option value="Antarctica">Antarctica</option>

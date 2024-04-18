@@ -16,5 +16,5 @@ watch(searchText, ()=>{
 <!--    search by name-->
     <input v-model="searchText" type="text" placeholder="Search by name" class="input input-bordered w-full max-w-xs" />
   </div>
-  <div>{{searchText}}</div>
+<!--  <div>{{searchText}}</div>-->
 </template>

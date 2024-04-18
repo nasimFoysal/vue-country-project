@@ -4,7 +4,8 @@ import { RouterLink } from "vue-router";
 
 <template>
   <div class="flex items-center justify-between gap-4 font-semibold py-5">
-    <div>Logo</div>
+<!--    <div class="text-[30px] font-bold">GlobalVista</div>-->
+    <RouterLink to="/"  class="text-[30px] font-bold">GlobalVista</RouterLink>
     <div class="space-x-4">
       <RouterLink to="/" active-class="active">Home</RouterLink>
       <RouterLink to="/listedCountries" active-class="active">Listed Countries</RouterLink>
